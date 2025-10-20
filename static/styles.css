@@ -1,0 +1,166 @@
+/* ─── VARIABLE PALETTE (bold + warm) ───────────────────────────── */
+:root {
+  --sky:     #d3dff1;
+  --navy:    #0a1d36;
+  --mid:     #2366af;
+  --white:   #ffffff;
+  --error:   #e24848;
+  --radius:  10px;
+  --shadow:  0 10px 24px rgba(10, 29, 54, .1);
+
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ─── GLOBAL RESET ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--sky);
+  color: var(--navy);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ─── HEADER / NAV ─────────────────────────────────────────────── */
+.navbar {
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+}
+.navbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: .05em;
+}
+.navbar a {
+  margin-left: 2rem;
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--navy);
+  transition: opacity .2s;
+}
+.navbar a:hover { opacity: .7; }
+
+/* ─── CARD ─────────────────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  width: 90%;
+  max-width: 780px;
+  margin: 3rem auto;
+  padding: 3rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ─── HERO HEADLINE ────────────────────────────────────────────── */
+.hero h2 {
+  margin: 0 0 1rem;
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--navy);
+}
+.rectangle {
+  width: 150px;
+  height: 150px;
+  background: var(--mid);
+  border-radius: var(--radius);
+  margin: 1.5rem 0 2rem;
+}
+
+/* ─── FORM LAYOUT ──────────────────────────────────────────────── */
+.row {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 1rem;
+}
+.row label {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-weight: 600;
+}
+.row input {
+  flex: 1;
+  padding: .65rem .9rem;
+  border: 1px solid #b5c5dc;
+  border-radius: var(--radius);
+  font-weight: 500;
+  transition: border-color .2s, box-shadow .2s;
+}
+.row input:focus {
+  border-color: var(--mid);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mid) 40%, transparent);
+  outline: none;
+}
+
+/* ─── BUTTONS ──────────────────────────────────────────────────── */
+.buttons {
+  display: flex;
+  gap: .8rem;
+  margin-top: 1.3rem;
+  flex-wrap: wrap;
+}
+button {
+  font: inherit;
+  font-weight: 600;
+  padding: .7rem 1.8rem;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s;
+}
+button:active { transform: translateY(1px); }
+
+.primary {
+  background: var(--navy);
+  color: var(--white);
+}
+.primary:hover { background: #153b69; }
+
+.ghost {
+  background: transparent;
+  color: var(--navy);
+  border: 2px solid var(--navy);
+}
+.ghost:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* ─── MISC TYPOGRAPHY / FEEDBACK ───────────────────────────────── */
+.alert  { margin: 0 0 1.2rem; }
+.error  { color: var(--error); font-weight: 600; }
+
+.subheading {
+  margin-top: 2.4rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.plot {
+  width: 100%;
+  border-radius: var(--radius);
+  margin-top: 1.2rem;
+  box-shadow: var(--shadow);
+}
+
+/* ─── FOOTER ───────────────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: .9rem;
+  color: #555;
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 550px) {
+  .row         { flex-direction: column; }
+  .buttons     { flex-direction: column; }
+  .hero h2     { font-size: 2.2rem; }
+}
