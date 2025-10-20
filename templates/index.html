@@ -2,13 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Eden Finance · Portfolio Growth</title>
+    <title>EDEN FINANCE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
   </head>
 
   <body>
-    <!-- ╭────────────────── SIDEBAR ──────────────────╮ -->
+    <!-- Sidebar -->
     <aside class="sidebar">
       <h1>EDEN FINANCE</h1>
       <nav>
@@ -18,71 +18,26 @@
             <a href="#" class="dropdown-btn">Pages ▼</a>
             <ul class="dropdown-container">
               <li><a href="{{ url_for('contact') }}">Contact</a></li>
-              <li><a href="#">About</a></li>
+              <li><a href="{{ url_for('stocks') }}">Stock Graphing</a></li>
             </ul>
           </li>
         </ul>
       </nav>
     </aside>
 
-    <!-- ╭────────────────── MAIN CONTENT ──────────────────╮ -->
+    <!-- Main content -->
     <main class="main-content">
       <div class="card">
-
-        <!-- hero headline -->
-        <section class="hero">
-          <h2>Investing<br>in your future</h2>
-        </section>
-
-        {% if error %}
-          <p class="alert error">{{ error }}</p>
-        {% endif %}
-
-        <form method="post">
-          <!-- DATE PICKERS -->
-          <div class="row">
-            <label>Start&nbsp;<input type="date" name="start_date" value="{{ start_default }}"></label>
-            <label>End&nbsp;<input type="date" name="end_date" value="{{ end_default }}"></label>
-          </div>
-
-          <!-- HOLDINGS -->
-          <div id="rows">
-            <div class="row">
-              <input name="ticker[]"  placeholder="Ticker">
-              <input name="amount[]" placeholder="£ Start Amount">
-            </div>
-          </div>
-
-          <!-- BUTTONS -->
-          <div class="buttons">
-            <button type="button" id="addRow" class="ghost">+ Add holding</button>
-            <button type="submit" class="primary">Plot growth →</button>
-          </div>
-        </form>
-
-        {% if plot_url %}
-          <h2 class="subheading">Result</h2>
-          <img class="plot" src="data:image/png;base64,{{ plot_url }}" alt="Growth chart">
-        {% endif %}
+        <h2>Welcome to EDEN FINANCE</h2>
+        <p>This is the home page. You can add any text, images, or links you want here.</p>
       </div>
     </main>
 
-    <!-- ╭────────────────── FOOTER ───────────────────╮ -->
     <footer class="footer">
       &copy; Eden Finance. All rights reserved.
     </footer>
 
-    <!-- ╭────────────────── SCRIPTS ───────────────────╮ -->
     <script>
-      // Duplicate the first row on click
-      document.getElementById('addRow').onclick = () => {
-        document.getElementById('rows').insertAdjacentHTML('beforeend', `
-          <div class="row">
-            <input name="ticker[]"  placeholder="Ticker">
-            <input name="amount[]" placeholder="£ Start Amount">
-          </div>`);
-      };
-
       // Sidebar dropdown toggle
       const dropdownBtns = document.querySelectorAll(".dropdown-btn");
       dropdownBtns.forEach(btn => {

@@ -42,30 +42,49 @@ import io, base64, datetime as dt
 app = Flask(__name__)
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
-    plot_url = error = None
+    # Simple text for the homepage
+    return render_template("index.html")
 
-    # ----------- defaults the template can reuse ------------
+@app.route("/stocks", methods=["GET", "POST"])
+def stocks():
+    plot_url = error = None
     start_default = "2010-01-01"
     end_default   = dt.date.today().isoformat()
 
     if request.method == "POST":
         try:
-            # ① NEW — pick the dates from <input type=date>
+            # Get dates from the form
             start_date = request.form.get("start_date", start_default)
-            end_date   = request.form.get("end_date",   end_default)
+            end_date   = request.form.get("end_date", end_default)
 
             if start_date >= end_date:
                 raise ValueError("End date must be after start date")
 
+            # Get tickers and amounts
             tickers = request.form.getlist("ticker[]")
-            amounts = [float(x) for x in request.form.getlist("amount[]")]
-            stocks  = list(zip(tickers, amounts))
+            amounts = request.form.getlist("amount[]")
 
-            # reroute inv_calc to *return* the figure
-            fig = inv_calc(start_date, end_date, stocks, return_fig=True)
+            # Validate input
+            if not tickers or not amounts:
+                raise ValueError("Please enter at least one ticker and amount")
+            
+            try:
+                amounts = [float(x) for x in amounts]
+            except ValueError:
+                raise ValueError("Amounts must be numbers")
 
+            stocks_list = list(zip(tickers, amounts))
+
+            # Call the investment calculator
+            fig = inv_calc(start_date, end_date, stocks_list, return_fig=True)
+
+            # Check if fig returned anything
+            if fig is None:
+                raise ValueError("No data available for the provided tickers/dates")
+
+            # Convert figure to PNG for rendering
             buf = io.BytesIO()
             fig.savefig(buf, format="png")
             buf.seek(0)
@@ -75,7 +94,7 @@ def index():
             error = str(e)
 
     return render_template(
-        "index.html",
+        "stocks.html",
         plot_url=plot_url,
         error=error,
         start_default=start_default,

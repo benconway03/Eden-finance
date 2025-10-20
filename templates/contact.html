@@ -3,23 +3,54 @@
   <head>
     <meta charset="utf-8" />
     <title>Contact · EDEN FINANCE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
   </head>
+
   <body>
-    <header class="navbar">
+    <!-- Sidebar (same as other pages) -->
+    <aside class="sidebar">
       <h1>EDEN FINANCE</h1>
       <nav>
-        <a href="{{ url_for('index') }}">Home</a>
+        <ul>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li>
+            <a href="#" class="dropdown-btn">Pages ▼</a>
+            <ul class="dropdown-container">
+              <li><a href="{{ url_for('contact') }}">Contact</a></li>
+              <li><a href="{{ url_for('stocks') }}">Stock Graphing</a></li>
+            </ul>
+          </li>
+        </ul>
       </nav>
-    </header>
+    </aside>
 
-    <main class="card">
-      <h2>Contact Us</h2>
-      <p>You can reach us at <strong>benjbconway@icloud.com</strong>.</p>
+    <!-- Main content -->
+    <main class="main-content">
+      <div class="card">
+        <h2>Contact Us</h2>
+        <p>You can reach us at <strong>benjbconway@icloud.com</strong>.</p>
+      </div>
     </main>
 
     <footer class="footer">
-      &copy; Conway Capital. All rights reserved.
+      &copy; Eden Finance. All rights reserved.
     </footer>
+
+    <script>
+      // Sidebar dropdown toggle
+      const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+      dropdownBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          btn.classList.toggle("active");
+          const container = btn.nextElementSibling;
+          if (container.style.display === "flex") {
+            container.style.display = "none";
+          } else {
+            container.style.display = "flex";
+          }
+        });
+      });
+    </script>
   </body>
 </html>
