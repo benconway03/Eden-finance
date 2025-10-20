@@ -34,8 +34,9 @@ body {
 }
 .navbar h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   letter-spacing: .05em;
+  font-weight: 700;
 }
 .navbar a {
   margin-left: 2rem;

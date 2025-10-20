@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Conway Capital · Portfolio Growth</title>
+    <title>Eden Finance · Portfolio Growth</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
   </head>
@@ -14,7 +14,7 @@
       <nav>
         <!-- purely decorative links for parity with the mock-up -->
         <a href="#">About</a>
-        <a href="#">Contact</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
       </nav>
     </header>
 
@@ -24,7 +24,6 @@
       <!-- hero headline + decorative rectangle -->
       <section class="hero">
         <h2>Investing<br>in your future</h2>
-        <div class="rectangle"></div>
       </section>
 
       {% if error %}
@@ -61,7 +60,7 @@
 
     <!-- ╭────────────────── FOOTER ───────────────────╮ -->
     <footer class="footer">
-      &copy; Conway Capital. All rights reserved.
+      &copy; Eden Finance. All rights reserved.
     </footer>
 
     <script>

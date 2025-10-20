@@ -82,6 +82,10 @@ def index():
         end_default=end_default
     )
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
 
