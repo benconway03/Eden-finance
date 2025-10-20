@@ -47,6 +47,73 @@ body {
 }
 .navbar a:hover { opacity: .7; }
 
+
+/* ─── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 220px;
+  height: 100%;
+  background: var(--navy);
+  color: var(--white);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 1000;
+}
+
+.sidebar h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.sidebar a {
+  color: var(--white);
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 0;
+}
+
+.sidebar a:hover {
+  opacity: 0.7;
+}
+
+/* Dropdown menu */
+.dropdown-container {
+  display: none;
+  flex-direction: column;
+  padding-left: 1rem;
+}
+
+.dropdown-container a {
+  font-size: 0.95rem;
+}
+
+.dropdown-btn.active + .dropdown-container {
+  display: flex;
+}
+
+/* ─── MAIN CONTENT ─────────────────────────────────────────── */
+.main-content {
+  margin-left: 240px; /* leaves space for sidebar */
+  padding: 2rem;
+}
+
+/* ─── CARD ───────────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 3rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+
+
 /* ─── CARD ─────────────────────────────────────────────────────── */
 .card {
   background: var(--white);

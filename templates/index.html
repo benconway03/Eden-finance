@@ -8,54 +8,63 @@
   </head>
 
   <body>
-    <!-- ╭────────────────── HEADER ──────────────────╮ -->
-    <header class="navbar">
-      <h1>EDEN&nbsp;FINANCE</h1>
+    <!-- ╭────────────────── SIDEBAR ──────────────────╮ -->
+    <aside class="sidebar">
+      <h1>EDEN FINANCE</h1>
       <nav>
-        <!-- purely decorative links for parity with the mock-up -->
-        <a href="#">About</a>
-        <a href="{{ url_for('contact') }}">Contact</a>
+        <ul>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li>
+            <a href="#" class="dropdown-btn">Pages ▼</a>
+            <ul class="dropdown-container">
+              <li><a href="{{ url_for('contact') }}">Contact</a></li>
+              <li><a href="#">About</a></li>
+            </ul>
+          </li>
+        </ul>
       </nav>
-    </header>
+    </aside>
 
-    <!-- ╭────────────────── CARD ────────────────────╮ -->
-    <main class="card">
+    <!-- ╭────────────────── MAIN CONTENT ──────────────────╮ -->
+    <main class="main-content">
+      <div class="card">
 
-      <!-- hero headline + decorative rectangle -->
-      <section class="hero">
-        <h2>Investing<br>in your future</h2>
-      </section>
+        <!-- hero headline -->
+        <section class="hero">
+          <h2>Investing<br>in your future</h2>
+        </section>
 
-      {% if error %}
-        <p class="alert error">{{ error }}</p>
-      {% endif %}
+        {% if error %}
+          <p class="alert error">{{ error }}</p>
+        {% endif %}
 
-      <form method="post">
-        <!-- DATE PICKERS -->
-        <div class="row">
-          <label>Start&nbsp;<input type="date" name="start_date" value="{{ start_default }}"></label>
-          <label>End&nbsp;<input type="date" name="end_date" value="{{ end_default }}"></label>
-        </div>
-
-        <!-- HOLDINGS -->
-        <div id="rows">
+        <form method="post">
+          <!-- DATE PICKERS -->
           <div class="row">
-            <input name="ticker[]"  placeholder="Ticker">
-            <input name="amount[]" placeholder="£ Start Amount">
+            <label>Start&nbsp;<input type="date" name="start_date" value="{{ start_default }}"></label>
+            <label>End&nbsp;<input type="date" name="end_date" value="{{ end_default }}"></label>
           </div>
-        </div>
 
-        <!-- BUTTONS -->
-        <div class="buttons">
-          <button type="button" id="addRow" class="ghost">+ Add holding</button>
-          <button type="submit" class="primary">Plot growth →</button>
-        </div>
-      </form>
+          <!-- HOLDINGS -->
+          <div id="rows">
+            <div class="row">
+              <input name="ticker[]"  placeholder="Ticker">
+              <input name="amount[]" placeholder="£ Start Amount">
+            </div>
+          </div>
 
-      {% if plot_url %}
-        <h2 class="subheading">Result</h2>
-        <img class="plot" src="data:image/png;base64,{{ plot_url }}" alt="Growth chart">
-      {% endif %}
+          <!-- BUTTONS -->
+          <div class="buttons">
+            <button type="button" id="addRow" class="ghost">+ Add holding</button>
+            <button type="submit" class="primary">Plot growth →</button>
+          </div>
+        </form>
+
+        {% if plot_url %}
+          <h2 class="subheading">Result</h2>
+          <img class="plot" src="data:image/png;base64,{{ plot_url }}" alt="Growth chart">
+        {% endif %}
+      </div>
     </main>
 
     <!-- ╭────────────────── FOOTER ───────────────────╮ -->
@@ -63,8 +72,9 @@
       &copy; Eden Finance. All rights reserved.
     </footer>
 
+    <!-- ╭────────────────── SCRIPTS ───────────────────╮ -->
     <script>
-      // duplicate the first row on click
+      // Duplicate the first row on click
       document.getElementById('addRow').onclick = () => {
         document.getElementById('rows').insertAdjacentHTML('beforeend', `
           <div class="row">
@@ -72,6 +82,20 @@
             <input name="amount[]" placeholder="£ Start Amount">
           </div>`);
       };
+
+      // Sidebar dropdown toggle
+      const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+      dropdownBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          btn.classList.toggle("active");
+          const container = btn.nextElementSibling;
+          if(container.style.display === "flex") {
+            container.style.display = "none";
+          } else {
+            container.style.display = "flex";
+          }
+        });
+      });
     </script>
   </body>
 </html>
