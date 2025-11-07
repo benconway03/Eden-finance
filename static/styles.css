@@ -232,3 +232,49 @@ button:active { transform: translateY(1px); }
   .buttons     { flex-direction: column; }
   .hero h2     { font-size: 2.2rem; }
 }
+
+/* ======== PROFILE SECTION STYLES ======== */
+
+/* This creates the main 2-column container */
+.profile-container {
+  display: flex;       /* Use Flexbox for side-by-side layout */
+  gap: 20px;           /* Adds space between the two profile cards */
+  margin-top: 20px;    /* Adds space below the "Welcome" card */
+}
+
+/* This styles each individual profile card */
+.profile-card {
+  flex: 1;             /* Makes each card take up equal space (50%) */
+  background-color: #fff; /* Optional: white background */
+  border-radius: 8px;     /* Optional: rounded corners */
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: subtle shadow */
+  text-align: center;  /* Centers the content */
+}
+
+/* This styles the profile picture */
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;   /* Makes the image a circle */
+  object-fit: cover;    /* Prevents the image from stretching */
+  margin-bottom: 15px;
+}
+
+.profile-card h3 {
+  margin-bottom: 10px;
+}
+
+.profile-card p {
+  font-size: 0.9em;
+  line-height: 1.4;
+  color: #555;
+}
+
+/* ======== RESPONSIVE STYLES ======== */
+/* This makes the profiles stack on top of each other on small screens */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column; /* Stack vertically on mobile */
+  }
+}

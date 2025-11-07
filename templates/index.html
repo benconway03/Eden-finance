@@ -8,7 +8,6 @@
   </head>
 
   <body>
-    <!-- Sidebar -->
     <aside class="sidebar">
       <h1>EDEN FINANCE</h1>
       <nav>
@@ -19,19 +18,43 @@
             <ul class="dropdown-container">
               <li><a href="{{ url_for('contact') }}">Contact</a></li>
               <li><a href="{{ url_for('stocks') }}">Stock Graphing</a></li>
+              <li><a href="{{ url_for('blog') }}">Blog</a></li>
             </ul>
           </li>
         </ul>
       </nav>
     </aside>
 
-    <!-- Main content -->
     <main class="main-content">
       <div class="card">
         <h2>Welcome to EDEN FINANCE</h2>
-        <p>This is the home page. You can add any text, images, or links you want here.</p>
+        <p>The purpose of this website is to showcase the financial and mathematical-related interests of Ben Conway
+          and Tyler Yanagida.</p>
       </div>
-    </main>
+
+      <section class="profile-container">
+        
+        <div class="profile-card">
+          <img src="{{ url_for('static', filename='images/BC_linked_in_profile.jpeg') }}" alt="Profile picture of Ben Conway" class="profile-pic">
+          <h3>Ben Conway</h3>
+          <h5>Website Owner, Developer</h5>
+          <p><strong>Email:</strong> benjbconway@icloud.com</p>
+          <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/ben-conway1/" target="_blank" rel="noopener noreferrer" >linkedin.com/in/ben-conway1/</a></p>
+          <p><strong>GitHub:</strong> <a href="https://github.com/benconway03" target="_blank" rel="noopener noreferrer" >https://github.com/benconway03</a></p>
+          <p>BSc Mathematics student at the University of Bath</p>
+        </div>
+        
+        <div class="profile-card">
+          <img src="{{ url_for('static', filename='images/TY_linked_in_profile.jpeg') }}" alt="Profile picture of Tyler Yanagida" class="profile-pic">
+          <h3>Tyler Yanagida</h3>
+          <h5>Website Owner</h5>
+          <p><strong>Email:</strong> tyleryanagida@gmail.com</p>
+          <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/tyler-yanagida-106931251/" target="_blank" rel="noopener noreferrer" >linkedin.com/in/tyler-yanagida-106931251/</a></p>
+          <p>BSc Economics student at the University fo Bath.</p>
+        </div>
+
+      </section>
+      </main>
 
     <footer class="footer">
       
