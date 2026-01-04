@@ -109,6 +109,12 @@ def contact():
 def blog():
     return render_template('blog.html')
 
+@app.route('/investment-calculator', methods=['GET', 'POST'])
+def investment_calculator():
+    # You can add calculation logic here later. 
+    # For now, it simply renders the new page.
+    return render_template('investment_calculator.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
 

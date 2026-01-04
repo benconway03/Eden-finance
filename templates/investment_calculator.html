@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Investment Calculator - EDEN FINANCE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+  </head>
+
+  <body>
+    <aside class="sidebar">
+      <h1>EDEN FINANCE</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li>
+            <a href="#" class="dropdown-btn">Pages ▼</a>
+            <ul class="dropdown-container">
+              <li><a href="{{ url_for('contact') }}">Contact</a></li>
+              <li><a href="{{ url_for('stocks') }}">Stock Graphing</a></li>
+              <li><a href="{{ url_for('investment_calculator') }}">Investment Calculator</a></li> <li><a href="{{ url_for('blog') }}">Blog</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="card">
+        <h2>Investment Calculator</h2>
+        <p>Calculate your potential returns here.</p>
+        
+        <form>
+            <label>Initial Investment (£):</label><br>
+            <input type="number" placeholder="1000"><br><br>
+            <button type="button">Calculate</button>
+        </form>
+
+      </div>
+    </main>
+
+    <script>
+      const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+      dropdownBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          btn.classList.toggle("active");
+          const container = btn.nextElementSibling;
+          if(container.style.display === "flex") {
+            container.style.display = "none";
+          } else {
+            container.style.display = "flex";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
