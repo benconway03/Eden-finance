@@ -3,6 +3,8 @@ matplotlib.use("Agg")               # headless backend for servers
 import matplotlib.pyplot as plt
 import yfinance as yf
 import pandas as pd
+from flask import Flask, render_template, request
+import io, base64, datetime as dt
 
 def inv_calc(start_date, end_date, stocks, *, return_fig=False):
     if not stocks or not all(isinstance(t, tuple) and len(t) == 2 for t in stocks):
@@ -34,10 +36,38 @@ def inv_calc(start_date, end_date, stocks, *, return_fig=False):
     return values                      # keep old behaviour available
 
 
+def inv_calc_futr(  start_amount, 
+                    time_period_years, 
+                    time_period_months, 
+                    annual_return_rate, 
+                    contributions, 
+                    contribution_timing):
+    if contribution_timing not in ('Yearly', 'Monthly'):
+        raise ValueError("Wrong Contribution Timing")
+    else:
+        wealth = [start_amount]
+        total_time_months = time_period_years*12 + time_period_months
+        return_rate_monthly = (1+annual_return_rate/100)**(1/12)
+        if contribution_timing == 'Monthly':
+            cont_lst = [contributions]*(total_time_months+1)
+        elif contribution_timing == 'Yearly':
+            cont_lst = [contributions if i % 12 == 0 and i != 0 else 0 for i in range(total_time_months+1)]
+        total_time_months = time_period_years*12 + time_period_months
+        for i in range (1, total_time_months+1):
+            wealth.append(wealth[i-1]*return_rate_monthly + cont_lst[i])
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(wealth, label='Portfolio Value')
+    ax.set_title(f"Projected Wealth over {total_time_months} Months")
+    ax.set_xlabel("Months")
+    ax.set_ylabel("Value (£)")
+    ax.grid(True)
+    ax.legend()
+    fig.tight_layout()
+    return fig
+
+
 
 # app.py
-from flask import Flask, render_template, request
-import io, base64, datetime as dt
 
 app = Flask(__name__)
 
@@ -111,9 +141,52 @@ def blog():
 
 @app.route('/investment-calculator', methods=['GET', 'POST'])
 def investment_calculator():
-    # You can add calculation logic here later. 
-    # For now, it simply renders the new page.
-    return render_template('investment_calculator.html')
+    plot_url = None
+    error = None
+    
+    # Default values to show in the form initially
+    defaults = {
+        'start_amount': 1000,
+        'years': 10,
+        'months': 0,
+        'rate': 7.0,
+        'contribution': 100,
+        'timing': 'Monthly'
+    }
+
+    if request.method == 'POST':
+        try:
+            # 1. Get data from form
+            start_amount = float(request.form.get('start_amount'))
+            years = int(request.form.get('years'))
+            months = int(request.form.get('months'))
+            rate = float(request.form.get('rate'))
+            contribution = float(request.form.get('contribution'))
+            timing = request.form.get('timing')
+
+            # Update defaults so the form keeps the values user typed
+            defaults = {
+                'start_amount': start_amount, 'years': years, 'months': months,
+                'rate': rate, 'contribution': contribution, 'timing': timing
+            }
+
+            # 2. Run Calculation
+            fig = inv_calc_futr(start_amount, years, months, rate, contribution, timing)
+
+            # 3. Convert Plot to Image (Base64)
+            buf = io.BytesIO()
+            fig.savefig(buf, format="png")
+            buf.seek(0)
+            plot_url = base64.b64encode(buf.read()).decode("ascii")
+            plt.close(fig) # Clean up memory
+
+        except Exception as e:
+            error = f"Error: {str(e)}"
+
+    return render_template('investment_calculator.html', 
+                           plot_url=plot_url, 
+                           error=error, 
+                           defaults=defaults)
 
 if __name__ == "__main__":
     app.run(debug=True)
