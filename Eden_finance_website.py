@@ -139,6 +139,10 @@ def contact():
 def blog():
     return render_template('blog.html')
 
+@app.route('/resource_lib')
+def resource_lib():
+    return render_template('resource_lib.html')
+
 @app.route('/investment-calculator', methods=['GET', 'POST'])
 def investment_calculator():
     plot_url = None
