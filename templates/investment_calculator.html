@@ -5,88 +5,103 @@
     <title>Investment Calculator - EDEN FINANCE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    
     <style>
-      /* Simple styling for the form */
-      .form-group { margin-bottom: 15px; }
-      .form-group label { display: inline-block; width: 180px; font-weight: bold; }
-      .form-group input, .form-group select { padding: 5px; width: 200px; }
-      .calc-btn { background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer; }
-      .calc-btn:hover { background-color: #0056b3; }
-      .error-msg { color: red; font-weight: bold; }
+      /* * LOCAL OVERRIDE FOR ALIGNMENT 
+       * This forces all labels to be the same width so inputs align perfectly.
+       */
+      .row label {
+        min-width: 200px; /* Wide enough to fit "Contribution Amount (£)" */
+      }
+
+      /* On mobile, remove the fixed width so they stack naturally */
+      @media (max-width: 550px) {
+        .row label { min-width: auto; }
+      }
     </style>
   </head>
 
   <body>
+
     <aside class="sidebar">
       <h1>EDEN FINANCE</h1>
-      <nav>
-        <ul>
-          <li><a href="{{ url_for('index') }}">Home</a></li>
-          <li>
-            <a href="#" class="dropdown-btn">Pages ▼</a>
-            <ul class="dropdown-container">
+      
+      <nav style="display: contents;">
+        <a href="{{ url_for('index') }}">Home</a>
+        
+        <div style="width: 100%;">
+          <a href="#" class="dropdown-btn">Pages ▼</a>
+          <div class="dropdown-container">
               <li><a href="{{ url_for('contact') }}">Contact</a></li>
               <li><a href="{{ url_for('stocks') }}">Stock Graphing</a></li>
               <li><a href="{{ url_for('investment_calculator') }}">Investment Calculator</a></li>
               <li><a href="{{ url_for('blog') }}">Blog</a></li>
-            </ul>
-          </li>
-        </ul>
+              <li><a href="{{ url_for('resource_lib') }}">Resource Library</a></li>
+              <li><a href="{{ url_for('market_pulse') }}">Market Pulse</a></li>
+          </div>
+        </div>
       </nav>
     </aside>
 
     <main class="main-content">
-      <div class="card">
-        <h2>Investment Calculator</h2>
-        <p>Project your future wealth based on compound interest.</p>
+      
+      <div class="hero">
+         <h2>Investment Calculator</h2>
+         <p style="margin-bottom: 2rem;">Project your future wealth based on compound interest.</p>
+      </div>
 
+      <div class="card">
+        
         {% if error %}
-          <p class="error-msg">{{ error }}</p>
+          <div class="alert error">{{ error }}</div>
         {% endif %}
 
         <form method="POST">
-          <div class="form-group">
+          <div class="row">
             <label>Starting Amount (£):</label>
             <input type="number" step="0.01" name="start_amount" value="{{ defaults.start_amount }}" required>
           </div>
 
-          <div class="form-group">
+          <div class="row">
             <label>Duration (Years):</label>
             <input type="number" name="years" value="{{ defaults.years }}" required>
           </div>
 
-          <div class="form-group">
+          <div class="row">
             <label>Duration (Months):</label>
             <input type="number" name="months" value="{{ defaults.months }}" required>
           </div>
 
-          <div class="form-group">
+          <div class="row">
             <label>Annual Return (%):</label>
             <input type="number" step="0.01" name="rate" value="{{ defaults.rate }}" placeholder="e.g. 7.0" required>
           </div>
 
-          <div class="form-group">
-            <label>Contribution Amount (£):</label>
+          <div class="row">
+            <label>Contribution (£):</label>
             <input type="number" step="0.01" name="contribution" value="{{ defaults.contribution }}" required>
           </div>
 
-          <div class="form-group">
-            <label>Contribution Timing:</label>
-            <select name="timing">
-              <option value="Monthly" {% if defaults.timing == 'Monthly' %}selected{% endif %}>Monthly</option>
-              <option value="Yearly" {% if defaults.timing == 'Yearly' %}selected{% endif %}>Yearly</option>
-            </select>
+          <div class="row">
+            <label>Timing:</label>
+            <div style="flex: 1;"> 
+                <select name="timing" style="width: 100%; padding: .65rem .9rem; border: 1px solid #b5c5dc; border-radius: var(--radius); background: white;">
+                  <option value="Monthly" {% if defaults.timing == 'Monthly' %}selected{% endif %}>Monthly</option>
+                  <option value="Yearly" {% if defaults.timing == 'Yearly' %}selected{% endif %}>Yearly</option>
+                </select>
+            </div>
           </div>
 
-          <button type="submit" class="calc-btn">Calculate</button>
+          <div class="buttons">
+            <button type="submit" class="primary">Calculate Projection</button>
+            <a href="{{ url_for('index') }}" class="button ghost" style="text-decoration:none; padding: .7rem 1.8rem; border-radius: 2rem; display:inline-block; text-align:center;">Cancel</a>
+          </div>
         </form>
       </div>
 
       {% if plot_url %}
-      <div class="card">
-        <h3>Results</h3>
-        <img src="data:image/png;base64,{{ plot_url }}" alt="Investment Graph" style="max-width: 100%;">
-      </div>
+      <div class="subheading">Projection Results</div>
+      <img src="data:image/png;base64,{{ plot_url }}" alt="Investment Graph" class="plot">
       {% endif %}
 
     </main>
@@ -94,10 +109,9 @@
     <script>
       const dropdownBtns = document.querySelectorAll(".dropdown-btn");
       dropdownBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault(); 
           btn.classList.toggle("active");
-          const container = btn.nextElementSibling;
-          container.style.display = (container.style.display === "flex") ? "none" : "flex";
         });
       });
     </script>
